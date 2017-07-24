@@ -22,13 +22,13 @@ def url_to_file(urls, settings):
         if url not in log_urls:
             with open(str('log.txt'), str('a')) as log:
                 log.write(url + "\n")
-            duration = pafy.new(url).length
-            if int(settings['min_song_len']) <= duration <= int(settings['max_song_len']):
-                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                    try:
+            try:
+                duration = pafy.new(url).length
+                if int(settings['min_song_len']) <= duration <= int(settings['max_song_len']):
+                    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                         ydl.download(urls)
-                    except:
-                        print "error grabbing", url
+            except:
+                print "error grabbing", url
 
 if __name__ == '__main__':
     test_urls = ['https://youtu.be/gP6FR0FbLoo', 'https://www.youtube.com/watch?v=Q7273Xl9XRU']
