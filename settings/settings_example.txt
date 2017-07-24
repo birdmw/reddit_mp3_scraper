@@ -1,0 +1,10 @@
+client_id=********
+secret=********
+default_count=10
+min_song_len=60
+max_song_len=600
+preferredcodec=mp3
+preferredquality=192
+reddit_username=********
+reddit_password=********
+target=C:\Downloads\songs
