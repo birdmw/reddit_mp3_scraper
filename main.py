@@ -25,7 +25,7 @@ def get_stuff(subreddit, settings, count):
     print urls
     youtube_scraper.url_to_file(urls, settings)
     source_files = os.getcwd() + os.sep + '*.' + settings['preferredcodec']
-    target_folder = settings['target'] + os.sep + subreddit
+    target_folder = settings['target'] + os.sep + 'scraped_' + subreddit
     if not os.path.exists(target_folder):
         os.makedirs(target_folder)
     file_list = glob.glob(source_files)
@@ -63,6 +63,7 @@ class App(QMainWindow, gui.Ui_MainWindow):
             count = int(settings['default_count'])
         urls = get_stuff(subreddit, settings, count)
         print urls
+
 
 def parse_genres():
     with open('libs' + os.sep + 'genres' + os.sep + 'raw.txt', 'rb') as f:
