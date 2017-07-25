@@ -1,10 +1,10 @@
-client_id=********
-secret=********
+client_id=VwpCIEUI6cGbeg
+secret=RmmO26okcmx_tSqjEXfsLxGb1N4
 default_count=10
 min_song_len=60
 max_song_len=600
 preferredcodec=mp3
 preferredquality=192
-reddit_username=********
-reddit_password=********
-target=C:\Downloads\songs
+reddit_username=slugsnot
+reddit_password=bubba1
+target=C:\Users\birdmw\Music\_Serato_\Auto Import
