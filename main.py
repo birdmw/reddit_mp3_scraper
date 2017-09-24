@@ -64,6 +64,7 @@ class App(QMainWindow, gui.Ui_MainWindow):
         urls = get_stuff(subreddit, settings, count)
         print urls
 
+
 def parse_genres():
     with open('libs' + os.sep + 'genres' + os.sep + 'raw.txt', 'rb') as f:
         raw_text = ' '.join([a.strip() for a in f.readlines()])
