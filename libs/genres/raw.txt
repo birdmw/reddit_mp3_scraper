@@ -1,4 +1,5 @@
-﻿/r/reggae
+﻿/r/beats
+/r/reggae
 subreddit 	subscribers
 /r/Music 	2412406
 /r/ListenToThis 	150406

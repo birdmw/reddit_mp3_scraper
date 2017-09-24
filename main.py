@@ -20,14 +20,17 @@ def read_settings():
     return settings
 
 
-def get_stuff(subreddit, settings, count):
-    urls = subscraper.get_urls(subreddit, settings, count)
+def get_stuff(subreddit, settings, count, time_filter):
+    urls = subscraper.get_urls(subreddit, settings, count, time_filter)
     print urls
     youtube_scraper.url_to_file(urls, settings)
     source_files = os.getcwd() + os.sep + '*.' + settings['preferredcodec']
     target_folder = settings['target'] + os.sep + 'scraped_' + subreddit
     if not os.path.exists(target_folder):
         os.makedirs(target_folder)
+    file_list = glob.glob(source_files)
+    for single_file in file_list:
+        os.rename(single_file, single_file[:-16]+'.mp3')
     file_list = glob.glob(source_files)
     for single_file in file_list:
         shutil.move(single_file, target_folder)
@@ -47,7 +50,10 @@ class App(QMainWindow, gui.Ui_MainWindow):
         model = QStandardItemModel(self.listView)
         typed = str(self.lineEdit.text())
         scored = map(lambda sub: (sub, int(long(editdistance.eval(typed, sub)))), subs)
-        subs = zip(*sorted(scored, key=lambda x: x[1]))[0]
+        # # If levenstein:
+        # subs = zip(*sorted(scored, key=lambda x: x[1]))[0]
+        # If not levenstein:
+        subs = sorted([s for s in subs if typed.lower() in s])
         for sub in subs:
             item = QStandardItem(sub)
             model.appendRow(item)
@@ -57,12 +63,14 @@ class App(QMainWindow, gui.Ui_MainWindow):
     def button_clicked(self):
         subreddit = str(self.lineEdit.text())
         settings = read_settings()
+        time_filter = str(self.comboBox.currentText())
         try:
             count = int(float(self.lineEdit_2.text()))
         except:
             count = int(settings['default_count'])
-        urls = get_stuff(subreddit, settings, count)
+        urls = get_stuff(subreddit, settings, count, time_filter)
         print urls
+        print "DONE!"
 
 
 def parse_genres():

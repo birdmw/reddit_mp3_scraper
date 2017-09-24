@@ -11,7 +11,7 @@ import praw
 import requests.auth
 
 
-def get_urls(subreddit, settings, count):
+def get_urls(subreddit, settings, count, time_filter):
     client_auth = requests.auth.HTTPBasicAuth(settings['client_id'], settings['secret'])
     post_data = {"grant_type": "password", "username": settings['reddit_username'],
                  "password": settings['reddit_password']}
@@ -30,12 +30,14 @@ def get_urls(subreddit, settings, count):
                          client_secret=settings['secret'],
                          user_agent="ChangeMeClient/0.1 by " + settings['reddit_username'])
     urls = []
-    for submission in reddit.subreddit(subreddit).hot(limit=count):
-        # pprint(dir(submission))
-        url = str(submission.url)
-        line = re.sub('[.]', '', url)
-        if 'youtube' in line.lower():
-            urls.append(url)
+    for submission in reddit.subreddit(subreddit).top(limit=count, time_filter=time_filter):
+        try:
+            url = str(submission.url)
+            line = re.sub('[.]', '', url)
+            if 'youtube' in line.lower() and 'playlist' not in line.lower():
+                urls.append(url)
+        except:
+            print('youtube url no good')
     return urls
 
 
